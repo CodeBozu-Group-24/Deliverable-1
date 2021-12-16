@@ -52,16 +52,18 @@ for presidents in list21_pres:
     for text in text_list:
         party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
         parties.append(party_full)
-    details = []
-    details.append(politician)
-    details.append(politician_fullname)
-    details.append(birth_date)
-    details.append(age)
-    details.append(birthplace)
-    details.append(parties)
-    details.append(21)
+    details21 = []
+    details21.append(politician)
+    details21.append(politician_fullname)
+    details21.append(birth_date)
+    details21.append(age)
+    details21.append(birthplace)
+    details21.append(parties)
+    details21.append("President")
+    details21.append(21)
     with open('details.csv', 'a') as f:
         writer_object = writer(f)
-        writer_object.writerow(details)
+        writer_object.writerow(details21)
         f.close()
-    
+
+#details for 20st century presidents
