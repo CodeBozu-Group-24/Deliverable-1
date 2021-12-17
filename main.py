@@ -58,7 +58,7 @@ for presidents in list21_pres:
     details21.append(birth_date)
     details21.append(age)
     details21.append(birthplace)
-    details21.append(parties)
+    details21.append(', '.join(parties))
     details21.append("President")
     details21.append(21)
     with open('details.csv', 'a') as f:
@@ -100,7 +100,7 @@ for presidents in list20_pres:
     for text in text_list:
         party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
         parties.append(party_full)
-    details20.append(parties)
+    details20.append(', '.join(parties))
     details20.append("President")
     details20.append(20)
     with open('details.csv', 'a') as f:
@@ -143,7 +143,7 @@ for vice_presidents in list21_vp:
     details21_vp.append(birth_date)
     details21_vp.append(age)
     details21_vp.append(birthplace)
-    details21_vp.append(parties)
+    details21_vp.append(', '.join(parties))
     details21_vp.append("Vice President")
     details21_vp.append(21)
     with open('details.csv', 'a') as f:
@@ -192,7 +192,7 @@ for vice_presidents in list20_vp:
     for text in text_list:
         party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
         parties.append(party_full)
-    details20_vp.append(parties)
+    details20_vp.append(', '.join(parties))
     details20_vp.append("Vice President")
     details20_vp.append(20)
     with open('details.csv', 'a') as f:
