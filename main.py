@@ -84,7 +84,8 @@ for presidents in list20_pres:
     if age == None:
         details20.append("Died")
     else:
-        details20.append(age.get_text())    
+        details20.append(age.get_text()[5:8])   
+         
     """    
     data_for_birthplace = soup.find('span', class_='bday').parent
     for data in data_for_birthplace:
