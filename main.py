@@ -100,7 +100,7 @@ for presidents in list20_pres:
     birthplace = full_data[required_index:]
     print(birthplace)
     """
-    birth_date = "?" #subject to change
+    birthplace = "?" #subject to change
     details20.append(birthplace)
     text_list = ['Democratic', 'Republican']
     parties = []
