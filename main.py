@@ -150,3 +150,52 @@ for vice_presidents in list21_vp:
         writer_object = writer(f)
         writer_object.writerow(details21_vp)
         f.close()      
+
+#creating a list of 20th century vice-presidents
+for title in soup20_vp.findAll('div', {"id":"mw-pages"}):
+    names_20 = title.find_all('li')
+list20_vp = []    
+for i in range(len(names_20)):
+    list20_vp.append(names_20[i].get_text())
+
+#details for 20th century vice-presidents 
+for vice_presidents in list20_vp:
+    data = requests.get("https://en.wikipedia.org/wiki/{}".format(vice_presidents)).text
+    soup = BeautifulSoup(data, 'lxml')
+    details20_vp = []
+    politician = soup.find('div', class_='fn').get_text()
+    details20_vp.append(politician)
+    politician_fullname = soup.find('div', class_="nickname")
+    if politician_fullname != None:
+        details20_vp.append(politician_fullname.get_text())
+    if politician_fullname == None:
+        details20_vp.append(politician)    
+    birth_date = soup.find('span', class_='bday').get_text()
+    details20_vp.append(birth_date)
+    age = soup.find('span', class_="noprint ForceAgeToShow")
+    if age == None:
+        details20_vp.append("Died")
+    else:
+        details20_vp.append(age.get_text()[5:8])   
+         
+    birthplace_full = soup.find_all('span', class_='bday')[0]
+    #b_reduced = birthplace_full.parent.parent.parent.get_text()
+    birthplace_full = birthplace_full.parent.parent
+    #print(birthplace_full)
+    try:
+        info = birthplace_full.find_all('a')[0]
+        details20_vp.append(info.text)
+    except IndexError:
+        details20_vp.append(list(birthplace_full.children)[-1])
+    text_list = ['Democratic', 'Republican']
+    parties = []
+    for text in text_list:
+        party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
+        parties.append(party_full)
+    details20_vp.append(parties)
+    details20_vp.append("Vice President")
+    details20_vp.append(20)
+    with open('details.csv', 'a') as f:
+        writer_object = writer(f)
+        writer_object.writerow(details20_vp)
+        f.close()
