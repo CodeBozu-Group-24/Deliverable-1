@@ -86,23 +86,15 @@ for presidents in list20_pres:
     else:
         details20.append(age.get_text()[5:8])   
          
-    """    
-    data_for_birthplace = soup.find('span', class_='bday').parent
-    for data in data_for_birthplace:
-        data_reduced = soup.find_all('a', href=True)
-    full_data = data_reduced[0].parent.get_text()
-    full_data.split()
-    print(full_data)
-    indices = []
-    for i in range(len(full_data)):
-        if full_data[i] == ')':
-            indices.append(i)
-    #required_index = indices[1] + 1
-    birthplace = full_data[required_index:]
-    print(birthplace)
-    """
-    birthplace = "?" #subject to change
-    details20.append(birthplace)
+    birthplace_full = soup.find_all('span', class_='bday')[0]
+    #b_reduced = birthplace_full.parent.parent.parent.get_text()
+    birthplace_full = birthplace_full.parent.parent
+    #print(birthplace_full)
+    try:
+        info = birthplace_full.find_all('a')[0]
+        details20.append(info.text)
+    except IndexError:
+        details20.append(list(birthplace_full.children)[-1])
     text_list = ['Democratic', 'Republican']
     parties = []
     for text in text_list:
