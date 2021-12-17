@@ -67,3 +67,50 @@ for presidents in list21_pres:
         f.close()
 
 #details for 20st century presidents
+for presidents in list20_pres:
+    data = requests.get("https://en.wikipedia.org/wiki/{}".format(presidents)).text
+    soup = BeautifulSoup(data, 'lxml')
+    details20 = []
+    politician = soup.find('div', class_='fn').get_text()
+    details20.append(politician)
+    politician_fullname = soup.find('div', class_="nickname")
+    if politician_fullname != None:
+        details20.append(politician_fullname.get_text())
+    if politician_fullname == None:
+        details20.append(politician)    
+    birth_date = soup.find('span', class_='bday').get_text()
+    details20.append(birth_date)
+    age = soup.find('span', class_="noprint ForceAgeToShow")
+    if age == None:
+        details20.append("Died")
+    else:
+        details20.append(age.get_text())    
+    """    
+    data_for_birthplace = soup.find('span', class_='bday').parent
+    for data in data_for_birthplace:
+        data_reduced = soup.find_all('a', href=True)
+    full_data = data_reduced[0].parent.get_text()
+    full_data.split()
+    print(full_data)
+    indices = []
+    for i in range(len(full_data)):
+        if full_data[i] == ')':
+            indices.append(i)
+    #required_index = indices[1] + 1
+    birthplace = full_data[required_index:]
+    print(birthplace)
+    """
+    birth_date = "?" #subject to change
+    details20.append(birthplace)
+    text_list = ['Democratic', 'Republican']
+    parties = []
+    for text in text_list:
+        party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
+        parties.append(party_full)
+    details20.append(parties)
+    details20.append("President")
+    details20.append(20)
+    with open('details.csv', 'a') as f:
+        writer_object = writer(f)
+        writer_object.writerow(details20)
+        f.close()
