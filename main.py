@@ -290,7 +290,11 @@ parties = []
 for text in text_list:
     party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
     parties.append(party_full) #since both parties were same, we can take any one
-clinton.append(', '.join(parties))
+party_reduced = []
+for party in parties:
+    if party not in party_reduced:
+        party_reduced.append(party)
+clinton.append(', '.join(party_reduced))
 
 clinton.append("Vice President")
 clinton.append(19)
