@@ -199,3 +199,99 @@ for vice_presidents in list20_vp:
         writer_object = writer(f)
         writer_object.writerow(details20_vp)
         f.close()
+
+#creating a list of 19th century vice-presidents
+for title in soup19_vp.findAll('div', {"id":"mw-pages"}):
+    names_19 = title.find_all('li')
+list19_vp = []    
+for i in range(len(names_19)):
+    list19_vp.append(names_19[i].get_text())    
+
+#details for 19th century vice-presidents 
+for vice_presidents in (list19_vp[0:3] + list19_vp[4:]):
+    data = requests.get("https://en.wikipedia.org/wiki/{}".format(vice_presidents)).text
+    soup = BeautifulSoup(data, 'lxml')
+    details19_vp = []
+    politician = soup.find('div', class_='fn').get_text()
+    details19_vp.append(politician)
+    politician_fullname = soup.find('div', class_="nickname")
+    if politician_fullname != None:
+        details19_vp.append(politician_fullname.get_text())
+    if politician_fullname == None:
+        details19_vp.append(politician)    
+    birth_date = soup.find('span', class_='bday').get_text()
+    details19_vp.append(birth_date)
+    age = soup.find('span', class_="noprint ForceAgeToShow")
+    if age == None:
+        details19_vp.append("Died")
+    else:
+        details19_vp.append(age.get_text()[5:8])   
+         
+    birthplace_full = soup.find_all('span', class_='bday')[0]
+    birthplace_full = birthplace_full.parent.parent
+    try:
+        info = birthplace_full.find_all('a')[0]
+        details19_vp.append(info.text)
+    except IndexError:
+        details19_vp.append(list(birthplace_full.children)[-1])
+    text_list = ['Democratic', 'Republican']
+    parties = []
+    for text in text_list:
+        party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
+        parties.append(party_full)
+    details19_vp.append(', '.join(parties))
+    details19_vp.append("Vice President")
+    details19_vp.append(20)
+    with open('details.csv', 'a') as f:
+        writer_object = writer(f)
+        writer_object.writerow(details19_vp)
+        f.close()       
+
+#adding George Clinton separately
+clinton = []
+link = "https://en.wikipedia.org/wiki/George_Clinton_(vice_president)"
+page = requests.get(link)
+
+soup = BeautifulSoup(page.content, 'lxml')
+
+politician = soup.find('div', class_='fn').get_text()
+clinton.append(politician)
+
+politician_fullname = soup.find('div', class_="nickname")
+if politician_fullname != None:
+    clinton.append(politician_fullname.get_text())
+if politician_fullname == None:
+    clinton.append(politician)
+
+item = soup.find_all('a', {"href": "/wiki/Old_Style_and_New_Style_dates"})[0]
+
+item = list(item.parent.parent.children)[1]
+item = list(item.children)
+for i in range(len(item)):
+    item[i] = item[i].text
+dob = ''.join(item[:3])
+dob = dob.replace(u'\xa0', u' ')
+clinton.append(dob)
+
+age = soup.find('span', class_="noprint ForceAgeToShow")
+if age == None:
+    clinton.append("Died")
+else:
+    clinton.append(age.get_text()[5:8])   
+
+clinton.append(''.join(item[3:]))    
+
+text_list = ['Democratic', 'Republican']
+parties = []
+for text in text_list:
+    party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
+    parties.append(party_full) #since both parties were same, we can take any one
+clinton.append(', '.join(parties))
+
+clinton.append("Vice President")
+clinton.append(19)
+
+with open('details.csv', 'a') as f:
+    writer_object = writer(f)
+    writer_object.writerow(clinton)
+    f.close()    
