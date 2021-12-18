@@ -1,8 +1,10 @@
-## Welcome to GitHub Pages
+## Welcome to CodeBozu Group 24 Projects
 
-You can use the [editor on GitHub](https://github.com/CodeBozu-Group-24/Scraper-Part-1-2-/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+This website is for Deliverable 1 project of our team's fellowship at CodeBozu with Cornell University students. This project consists of a web-scraper that fetches data from Wikipedia pages and creates a csv file consisting of details of Presidents and Vice Presidents of 21st, 20th and 19th centuries.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Contributors
+
+The project has been made successful with the collaboration of Prithwis Das, Anthony, Gene and Sean.
 
 ### Markdown
 
