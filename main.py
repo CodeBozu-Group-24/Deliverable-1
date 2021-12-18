@@ -241,7 +241,7 @@ for vice_presidents in (list19_vp[0:3] + list19_vp[4:]):
         parties.append(party_full)
     details19_vp.append(', '.join(parties))
     details19_vp.append("Vice President")
-    details19_vp.append(20)
+    details19_vp.append(19)
     with open('details.csv', 'a') as f:
         writer_object = writer(f)
         writer_object.writerow(details19_vp)
