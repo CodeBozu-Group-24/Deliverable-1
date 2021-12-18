@@ -239,7 +239,11 @@ for vice_presidents in (list19_vp[0:3] + list19_vp[4:]):
     for text in text_list:
         party_full = soup.find(lambda tag: tag.name == "a" and text in tag.text).text
         parties.append(party_full)
-    details19_vp.append(', '.join(parties))
+    party_reduced = []
+    for party in parties:
+        if party not in party_reduced:
+            party_reduced.append(party)    
+    details19_vp.append(', '.join(party_reduced))
     details19_vp.append("Vice President")
     details19_vp.append(19)
     with open('details.csv', 'a') as f:
